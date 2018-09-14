@@ -1,22 +1,41 @@
 package com.example.cerean.eartrainer;
 
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
     //MediaPlayer mediaPlayer;
     int randomSoundIndex;
+    Button playSoundButton;
+
     public void playSound(View view) {
         Log.i("randomSoundIndex", Integer.toString(randomSoundIndex));
         String fileNameToSet = indexToFileName(randomSoundIndex);
+        Log.i("fileNameToSet", fileNameToSet);
         //int help = Integer.parseInt(fileNameToSet);
         //MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.a1);
-        MediaPlayer mediaStuff = MediaPlayer.create(this, getResources().getIdentifier("c3", "raw", getPackageName()));
+        MediaPlayer mediaStuff = MediaPlayer.create(this, getResources().getIdentifier(fileNameToSet, "raw", getPackageName()));
         mediaStuff.start();
+        playSoundButton.setEnabled(false);
+        CountDownTimer countDownTimer = new CountDownTimer(4 * 1000, 1000) {
+
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.i("Yo", "as stated");
+            }
+
+            @Override
+            public void onFinish() {
+                Log.i("finished", "as stated");
+                playSoundButton.setEnabled(true);
+            }
+        }.start();
         //mediaPlayer.start();
     }
 
@@ -77,5 +96,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRandomSoundIndex();
+        playSoundButton = findViewById(R.id.repeatSoundButton);
     }
 }
