@@ -7,13 +7,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     //MediaPlayer mediaPlayer;
     int randomSoundIndex;
     Button playSoundButton;
-
+    TextView answerInputView;
+    Button answerSubmitButton;
     public void playSound(View view) {
         Log.i("randomSoundIndex", Integer.toString(randomSoundIndex));
         String fileNameToSet = indexToFileName(randomSoundIndex);
@@ -36,7 +38,14 @@ public class MainActivity extends AppCompatActivity {
                 playSoundButton.setEnabled(true);
             }
         }.start();
-        //mediaPlayer.start();
+    }
+
+    public void checkAnswerSubmission(View view) {
+        String userAnswer = answerInputView.getText().toString();
+        Log.i("userAnswer", userAnswer);
+
+        String rightAnswer = indexToFileName(randomSoundIndex);
+        Log.i("rightAnswer", rightAnswer);
     }
 
     public void setRandomSoundIndex() { // sounds will be indexed from 1 to 85
@@ -97,5 +106,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setRandomSoundIndex();
         playSoundButton = findViewById(R.id.repeatSoundButton);
+        answerInputView = findViewById(R.id.inputAnswer);
+        answerSubmitButton = findViewById(R.id.confirmInput);
     }
 }
